@@ -1,0 +1,13 @@
+package com.YoureInGoodHandsWith.Metrobank;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class MetrobankApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(MetrobankApplication.class, args);
+	}
+
+}
