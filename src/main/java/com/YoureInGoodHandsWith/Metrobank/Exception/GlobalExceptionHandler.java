@@ -1,34 +1,38 @@
 package com.YoureInGoodHandsWith.Metrobank.Exception;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.YoureInGoodHandsWith.Metrobank.Util.ErrorResponse;
 
-import org.springframework.http.*;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
+import lombok.extern.slf4j.Slf4j;
 
-import java.util.*;
-
+/**
+ * Global exception handler for centralizing error handling across the application.
+ * Provides consistent error response format for all exceptions.
+ */
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
-    // 🔹 BUSINESS EXCEPTION (your existing one)
+    /**
+     * Handles business-level exceptions for customer operations.
+     * 
+     * @param ex the CustomerException containing error details
+     * @return ResponseEntity with error response in BAD_REQUEST status
+     */
     @ExceptionHandler(CustomerException.class)
-    public ResponseEntity<ErrorResponse> handleCustomerEX(CustomerException ex) {
-
+    public ResponseEntity<ErrorResponse> handleCustomerException(CustomerException ex) {
         List<String> errors = ex.getErrors();
+        String message = (errors != null && !errors.isEmpty()) 
+            ? String.join(", ", errors) 
+            : ex.getMessage();
 
-        String message;
-
-        if (errors != null && !errors.isEmpty()) {
-            message = String.join(", ", errors);
-        } else {
-            message = ex.getMessage();
-        }
+        log.warn("Customer validation error: {}", message);
 
         ErrorResponse response = ErrorResponse.builder()
                 .transactionStatusCode(400)
@@ -38,17 +42,21 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
-
+    /**
+     * Handles validation errors for request body parameters.
+     * 
+     * @param ex the MethodArgumentNotValidException from Spring validation
+     * @return ResponseEntity with validation error details in BAD_REQUEST status
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleValidationEX(MethodArgumentNotValidException ex) {
-
+    public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
         List<String> errors = new ArrayList<>();
-
-        ex.getBindingResult().getFieldErrors().forEach(error -> {
-            errors.add(error.getField() + ": " + error.getDefaultMessage());
-        });
+        ex.getBindingResult().getFieldErrors().forEach(error -> 
+            errors.add(error.getField() + ": " + error.getDefaultMessage())
+        );
 
         String message = String.join(", ", errors);
+        log.warn("Validation failed: {}", message);
 
         ErrorResponse response = ErrorResponse.builder()
                 .transactionStatusCode(400)
@@ -56,5 +64,23 @@ public class GlobalExceptionHandler {
                 .build();
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    /**
+     * Fallback handler for unexpected exceptions.
+     * 
+     * @param ex the Exception
+     * @return ResponseEntity with generic error message in INTERNAL_SERVER_ERROR status
+     */
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleGenericException(Exception ex) {
+        log.error("Unexpected error occurred", ex);
+
+        ErrorResponse response = ErrorResponse.builder()
+                .transactionStatusCode(500)
+                .transactionStatusDescription("An unexpected error occurred. Please contact support.")
+                .build();
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 }

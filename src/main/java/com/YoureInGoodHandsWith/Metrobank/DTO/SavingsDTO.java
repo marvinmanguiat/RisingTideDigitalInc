@@ -6,6 +6,10 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
 
+/**
+ * DTO for savings account creation requests.
+ * Contains account details including account number, balance, and type.
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,13 +17,25 @@ import lombok.*;
 @Builder
 public class SavingsDTO {
 
-    @NotBlank
+    /**
+     * Unique account number for the savings account.
+     * Must not be blank and must be unique across all accounts.
+     */
+    @NotBlank(message = "Account number is required")
     private String accountNumber;
 
-    @NotNull
-    @Positive
+    /**
+     * Initial account balance.
+     * Must be a positive value.
+     */
+    @NotNull(message = "Balance is required")
+    @Positive(message = "Balance must be a positive value")
     private Double balance;
 
-    @NotNull
+    /**
+     * Type of savings account (e.g., SAVINGS, CHECKING).
+     * Must not be null.
+     */
+    @NotNull(message = "Account type is required")
     private AccountType accountType;
 }
