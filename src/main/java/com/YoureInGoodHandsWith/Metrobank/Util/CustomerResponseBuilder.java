@@ -2,17 +2,15 @@ package com.YoureInGoodHandsWith.Metrobank.Util;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import com.YoureInGoodHandsWith.Metrobank.Entity.Customer;
 
 public class CustomerResponseBuilder {
 
-	
     public static Map<String, Object> build302Found(Customer customer, String description) {
 
         Map<String, Object> response = new LinkedHashMap<>();
 
-    //    response.put("id", customer.getId());
+        // response.put("id", customer.getId());
         response.put("customerNumber", customer.getCustomerNumber());
         response.put("customerName", customer.getCustomerName());
         response.put("customerMobile", customer.getCustomerMobile());
@@ -26,8 +24,7 @@ public class CustomerResponseBuilder {
 
         return response;
     }
-    
-    
+
     public static Map<String, Object> build201Created(Customer customer, String description) {
 
         Map<String, Object> response = new LinkedHashMap<>();

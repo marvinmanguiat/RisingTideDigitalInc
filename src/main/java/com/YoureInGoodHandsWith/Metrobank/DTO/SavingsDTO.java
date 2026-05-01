@@ -1,6 +1,6 @@
 package com.YoureInGoodHandsWith.Metrobank.DTO;
-import com.YoureInGoodHandsWith.Metrobank.Entity.AccountType;
 
+import com.YoureInGoodHandsWith.Metrobank.Entity.AccountType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -19,7 +19,7 @@ public class SavingsDTO {
     @NotNull
     @Positive
     private Double balance;
-    
+
     @NotNull
     private AccountType accountType;
 }

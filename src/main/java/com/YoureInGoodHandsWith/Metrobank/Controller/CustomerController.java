@@ -2,7 +2,6 @@ package com.YoureInGoodHandsWith.Metrobank.Controller;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.YoureInGoodHandsWith.Metrobank.DTO.CustomerRequestDTO;
 import com.YoureInGoodHandsWith.Metrobank.Entity.Customer;
 import com.YoureInGoodHandsWith.Metrobank.Service.CustomerService;
@@ -37,9 +35,8 @@ public class CustomerController {
 				.body(CustomerResponseBuilder
 						.build201Created(service
 								.createCustomer(request), "Customer Account created"));
-		
+
 	}
-	
 
 	@GetMapping("/account/{customerNumber}")
 	public ResponseEntity<Map<String, Object>> get(@PathVariable Long customerNumber) {
