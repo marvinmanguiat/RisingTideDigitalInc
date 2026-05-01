@@ -1,5 +1,6 @@
 package com.YoureInGoodHandsWith.Metrobank.Entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
@@ -39,7 +40,7 @@ public class SavingsAccount {
 	private String accountNumber;
 
 	@Column(nullable = false)
-	private Double balance;
+	private BigDecimal balance;
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)

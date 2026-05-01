@@ -1,5 +1,7 @@
 package com.YoureInGoodHandsWith.Metrobank.DTO;
 
+import java.math.BigDecimal;
+
 import com.YoureInGoodHandsWith.Metrobank.Entity.AccountType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -30,7 +32,7 @@ public class SavingsDTO {
      */
     @NotNull(message = "Balance is required")
     @Positive(message = "Balance must be a positive value")
-    private Double balance;
+    private BigDecimal balance;
 
     /**
      * Type of savings account (e.g., SAVINGS, CHECKING).

@@ -3,6 +3,7 @@ package com.YoureInGoodHandsWith.Metrobank.Repo;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class CustomerRepositoryTest {
 		SavingsAccount sa = SavingsAccount.builder()
 				       .accountNumber("SA00000000001")
 				       .accountType(AccountType.S)
-				       .balance(699999999998888888.00)
+				       .balance(new BigDecimal("20.00"))
 				       .customer(customer)
 				       .build();
 		
