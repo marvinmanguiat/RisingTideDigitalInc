@@ -82,7 +82,8 @@ public class CustomerService {
 	}
 
 	public Customer getById(Long id) {
-		return customerRepository.findById(id).orElseThrow(() -> new CustomerException("Customer not found"));
+		return customerRepository.findById(id)
+				.orElseThrow(() -> new CustomerException("Customer not found"));
 	}
 
 	public Customer findCustomerByCustomerNum(Long customerNumber) {

@@ -34,7 +34,9 @@ public class CustomerController {
 	public ResponseEntity<?> create(@Valid @RequestBody CustomerRequestDTO request) {
 		return ResponseEntity
 				.status(HttpStatus.CREATED)
-				.body(CustomerResponseBuilder.build201Created(service.createCustomer(request), "Customer Account created"));
+				.body(CustomerResponseBuilder
+						.build201Created(service
+								.createCustomer(request), "Customer Account created"));
 		
 	}
 	
@@ -43,6 +45,8 @@ public class CustomerController {
 	public ResponseEntity<Map<String, Object>> get(@PathVariable Long customerNumber) {
 		return ResponseEntity
 				.status(HttpStatus.FOUND)
-				.body(CustomerResponseBuilder.build302Found(service.findCustomerByCustomerNum(customerNumber), "Customer account found "));
+				.body(CustomerResponseBuilder
+						.build302Found(service
+								.findCustomerByCustomerNum(customerNumber), "Customer account found "));
 	}
 }
