@@ -1,8 +1,10 @@
 package com.YoureInGoodHandsWith.Metrobank.Util;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
+
+import com.YoureInGoodHandsWith.Metrobank.DTO.SavingsDTO;
 import com.YoureInGoodHandsWith.Metrobank.Entity.Customer;
+import com.YoureInGoodHandsWith.Metrobank.Entity.SavingsAccount;
 
 /**
  * Utility class for building standardized API response objects.
@@ -19,6 +21,16 @@ public class CustomerResponseBuilder {
      */
     public static Map<String, Object> build302Found(Customer customer, String description) {
         Map<String, Object> response = new LinkedHashMap<>();
+        List<SavingsDTO> savingDTOList  =  new ArrayList<>();
+
+        customer.getSavings().forEach(saving -> {
+            SavingsDTO  savingDTO  =  SavingsDTO.builder()
+            .accountNumber(saving.getAccountNumber())
+            .balance(saving.getBalance())
+            .accountType(saving.getAccountType())
+            .build();
+            savingDTOList.add(savingDTO);
+        });
         
         response.put("customerNumber", customer.getCustomerNumber());
         response.put("customerName", customer.getCustomerName());
@@ -26,7 +38,7 @@ public class CustomerResponseBuilder {
         response.put("customerEmail", customer.getCustomerEmail());
         response.put("address1", customer.getAddress1());
         response.put("address2", customer.getAddress2());
-        response.put("savings", customer.getSavings());
+        response.put("savings", savingDTOList);
         response.put("transactionStatusCode", 200);
         response.put("transactionStatusDescription", description);
 
