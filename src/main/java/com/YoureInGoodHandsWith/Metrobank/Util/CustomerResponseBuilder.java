@@ -39,7 +39,7 @@ public class CustomerResponseBuilder {
         response.put("address1", customer.getAddress1());
         response.put("address2", customer.getAddress2());
         response.put("savings", savingDTOList);
-        response.put("transactionStatusCode", 200);
+        response.put("transactionStatusCode", 302);
         response.put("transactionStatusDescription", description);
 
         return response;

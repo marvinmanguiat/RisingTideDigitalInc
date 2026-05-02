@@ -52,9 +52,9 @@ public class SavingsAccount {
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
 
-	@JsonBackReference
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "customer_id", nullable = false)
+	@JoinColumn(name = "customer_number", referencedColumnName = "customerNumber")
+	@JsonBackReference
 	private Customer customer;
 
 	/**
