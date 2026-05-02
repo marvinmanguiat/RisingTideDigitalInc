@@ -80,7 +80,7 @@ public class CustomerService {
 	public Customer findCustomerByCustomerNum(Long customerNumber) {
 		log.debug("Retrieving customer by customer number: {}", customerNumber);
 		return customerRepository.findByCustomerNumber(customerNumber)
-				.orElseThrow(() -> {
+				.orElseThrow( () -> {
 					log.warn("Customer not found with customer number: {}", customerNumber);
 					return new CustomerException("Customer not found");
 				});
@@ -124,6 +124,34 @@ public class CustomerService {
 				break;
 			}
 		}
+	}
+
+@Transactional
+	public Customer updateCustomer(Long customerNumber,CustomerRequestDTO customerRequestDto){
+    Customer customer = customerRepository.findByCustomerNumber(customerNumber)
+            .orElseThrow(() -> new CustomerException("Customer not found"));
+
+    customer.setCustomerEmail(customerRequestDto.getCustomerEmail());
+    customer.setCustomerName(customerRequestDto.getCustomerName());
+    customer.setCustomerMobile(customerRequestDto.getCustomerMobile());
+    customer.setAddress1(customerRequestDto.getAddress1());
+    customer.setAddress2(customerRequestDto.getAddress2());
+
+	customer.getSavings().clear();
+
+	if(customerRequestDto.getSavings() !=null && !customerRequestDto.getSavings().isEmpty())
+	customerRequestDto.getSavings().forEach(savingAccount->{
+		SavingsAccount account = SavingsAccount.builder()
+				.accountNumber(savingAccount.getAccountNumber())
+				.balance(savingAccount.getBalance())
+				.accountType(savingAccount.getAccountType())
+				.customer(customer)
+				.build();
+
+		customer.getSavings().add(account);
+	});
+    log.info("Customer updated successfully with ID: {}", customer.getCustomerNumber());
+    return customerRepository.save(customer);
 	}
 
 	/**

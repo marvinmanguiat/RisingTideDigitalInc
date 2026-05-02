@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -66,5 +67,22 @@ public class CustomerController {
 		return ResponseEntity
 				.status(HttpStatus.OK)
 				.body(CustomerResponseBuilder.build302Found(customer, "Customer account found"));
+	}
+
+
+		@PutMapping("/customer/{customerNumber}")
+	public ResponseEntity<Map<String, Object>> update(@Valid @RequestBody CustomerRequestDTO request, @PathVariable Long customerNumber) {
+		log.info("Updating customer with email: {}", request.getCustomerEmail());
+		
+		Customer customer = service.findCustomerByCustomerNum(customerNumber);
+
+		
+		log.info("Customer updated successfully with ID: {}", customer.getCustomerNumber());
+
+		Customer updatedCustomer  = service.updateCustomer(customerNumber,request);
+
+		return ResponseEntity
+				.status(HttpStatus.CREATED)
+				.body(CustomerResponseBuilder.build201Created(updatedCustomer, "Customer Account updated"));
 	}
 }
