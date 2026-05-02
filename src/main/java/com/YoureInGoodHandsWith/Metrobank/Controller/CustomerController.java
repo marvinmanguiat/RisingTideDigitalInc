@@ -65,7 +65,7 @@ public class CustomerController {
 		log.info("Customer account retrieved successfully");
 
 		return ResponseEntity
-				.status(HttpStatus.OK)
+				.status(HttpStatus.FOUND)
 				.body(CustomerResponseBuilder.build302Found(customer, "Customer account found"));
 	}
 
