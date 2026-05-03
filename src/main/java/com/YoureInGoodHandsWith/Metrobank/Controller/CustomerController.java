@@ -68,7 +68,7 @@ public class CustomerController {
 				.status(HttpStatus.FOUND)
 				.body(CustomerResponseBuilder.build302Found(customer, "Customer account found"));
 	}
-
+  	
 	@PutMapping("/customer/{customerNumber}")
 	public ResponseEntity<Map<String, Object>> update(@Valid @RequestBody CustomerRequestDTO request,
 			@PathVariable Long customerNumber) {
@@ -78,7 +78,7 @@ public class CustomerController {
 
 		Customer updatedCustomer = service.updateCustomer(customerNumber, request);
 
-		log.info("Customer updated successfully with ID: {}", customer.getCustomerNumber());
+		log.info("Customer updated successfully with Customer Number : {}", customer.getCustomerNumber());
 
 		return ResponseEntity
 				.status(HttpStatus.CREATED)
