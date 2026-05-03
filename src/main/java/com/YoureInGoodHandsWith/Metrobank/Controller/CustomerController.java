@@ -40,9 +40,9 @@ public class CustomerController {
 	@PostMapping("/customer")
 	public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody CustomerRequestDTO request) {
 		log.info("Creating new customer with email: {}", request.getCustomerEmail());
-		
+
 		Customer customer = service.createCustomer(request);
-		
+
 		log.info("Customer created successfully with ID: {}", customer.getCustomerNumber());
 
 		return ResponseEntity
@@ -59,9 +59,9 @@ public class CustomerController {
 	@GetMapping("/account/{customerNumber}")
 	public ResponseEntity<Map<String, Object>> get(@PathVariable Long customerNumber) {
 		log.info("Fetching customer account for customer number: {}", customerNumber);
-		
+
 		Customer customer = service.findCustomerByCustomerNum(customerNumber);
-		
+
 		log.info("Customer account retrieved successfully");
 
 		return ResponseEntity
@@ -69,17 +69,16 @@ public class CustomerController {
 				.body(CustomerResponseBuilder.build302Found(customer, "Customer account found"));
 	}
 
-
-		@PutMapping("/customer/{customerNumber}")
-	public ResponseEntity<Map<String, Object>> update(@Valid @RequestBody CustomerRequestDTO request, @PathVariable Long customerNumber) {
+	@PutMapping("/customer/{customerNumber}")
+	public ResponseEntity<Map<String, Object>> update(@Valid @RequestBody CustomerRequestDTO request,
+			@PathVariable Long customerNumber) {
 		log.info("Updating customer with email: {}", request.getCustomerEmail());
-		
+
 		Customer customer = service.findCustomerByCustomerNum(customerNumber);
 
-		
-		log.info("Customer updated successfully with ID: {}", customer.getCustomerNumber());
+		Customer updatedCustomer = service.updateCustomer(customerNumber, request);
 
-		Customer updatedCustomer  = service.updateCustomer(customerNumber,request);
+		log.info("Customer updated successfully with ID: {}", customer.getCustomerNumber());
 
 		return ResponseEntity
 				.status(HttpStatus.CREATED)
