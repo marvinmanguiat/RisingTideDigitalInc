@@ -69,6 +69,14 @@ public class CustomerController {
 				.body(CustomerResponseBuilder.build302Found(customer, "Customer account found"));
 	}
   	
+	/** Updates an existing customer account with new details.
+	 * 
+	 * @param request        the customer update request containing updated customer
+	 *                       details
+	 * @param customerNumber the unique customer identifier for the account to be
+	 *                       updated
+	 * @return ResponseEntity with updated customer information and confirmation
+	 */
 	@PutMapping("/customer/{customerNumber}")
 	public ResponseEntity<Map<String, Object>> update(@Valid @RequestBody CustomerRequestDTO request,
 			@PathVariable Long customerNumber) {
