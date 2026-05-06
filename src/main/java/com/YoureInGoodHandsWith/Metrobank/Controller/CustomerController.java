@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.YoureInGoodHandsWith.Metrobank.DTO.CustomerRequestDTO;
+import com.YoureInGoodHandsWith.Metrobank.DTO.LoginRequest;
+import com.YoureInGoodHandsWith.Metrobank.DTO.LoginResponse;
 import com.YoureInGoodHandsWith.Metrobank.Entity.Customer;
+import com.YoureInGoodHandsWith.Metrobank.Service.AuthService;
 import com.YoureInGoodHandsWith.Metrobank.Service.CustomerService;
 import com.YoureInGoodHandsWith.Metrobank.Util.CustomerResponseBuilder;
 import jakarta.validation.Valid;
@@ -29,6 +32,24 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomerController {
 
 	private final CustomerService service;
+	private final AuthService authService;
+
+	/**
+	 * Authenticates a user and returns a JWT token.
+	 *
+	 * @param loginRequest the login credentials
+	 * @return ResponseEntity with JWT token
+	 */
+	@PostMapping("/auth/login")
+	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+		log.info("User login attempt for username: {}", loginRequest.getUsername());
+
+		LoginResponse response = authService.login(loginRequest);
+
+		log.info("User logged in successfully: {}", loginRequest.getUsername());
+
+		return ResponseEntity.ok(response);
+	}
 
 	/**
 	 * Creates a new customer account with optional savings accounts.
