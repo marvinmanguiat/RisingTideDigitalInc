@@ -7,7 +7,7 @@ method: POST
 
 endpoint 
 
-http://localhost:8085/v1/api/customer
+8085/v1/api/customer
 
 
 sample payload (w/out savings) :
@@ -74,7 +74,7 @@ method: GET
 
 endpoint 
 
-http://localhost:8085/v1/api/account/{customerNumber}
+8085/v1/api/account/{customerNumber}
 
 success response:
 ```json
