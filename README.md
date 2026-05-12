@@ -12,7 +12,7 @@ http://localhost:8085/v1/api/customer
 
 sample payload (w/out savings) :
 
-
+```json
 {
   "customerName": "Test One",
   "customerMobile": "09171252528",
@@ -21,10 +21,11 @@ sample payload (w/out savings) :
   "address2": ""
 }
 
+```
 
 
 sample payload (w/ savings) :
-
+```json
 {
   "customerName": "Test Two",
   "customerMobile": "09171252528",
@@ -40,9 +41,10 @@ sample payload (w/ savings) :
   ]
 }
 
+```
 
 sample payload w/ savings and Checking 
-
+```json
 {
     "customerName": "Test Three",
     "customerMobile": "09171252528",
@@ -63,6 +65,7 @@ sample payload w/ savings and Checking
     ]
 }
 
+```
 
 
 get Customer Profile
@@ -74,7 +77,7 @@ endpoint
 http://localhost:8085/v1/api/account/{customerNumber}
 
 success response:
-
+```json
 
 {
     "customerNumber": 6,
@@ -88,9 +91,10 @@ success response:
     "transactionStatusDescription": "Customer account found "
 }
 
+```
 
 // savings
-
+```json
 {
     "customerNumber": 7,
     "customerName": "Test Two",
@@ -109,9 +113,10 @@ success response:
     "transactionStatusDescription": "Customer account found "
 }
 
+```
 
 // w/ savings and Checking account 
-
+```json
 {
     "customerNumber": 8,
     "customerName": "Test Three",
@@ -137,5 +142,6 @@ success response:
 
 
 
+```
 
 
